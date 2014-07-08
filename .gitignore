@@ -1,0 +1,17 @@
+.*
+*.pyc
+*~
+
+mails/
+media/
+collected_static/
+cover/
+mab_django/settings/custom.py
+buildbot/
+
+*.log
+
+!.gitignore
+
+*.sublime-project
+*.sublime-workspace
