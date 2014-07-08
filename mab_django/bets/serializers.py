@@ -6,11 +6,11 @@ from .models import Bet
 
 
 class BetSerializer(serializers.ModelSerializer):
-
     judge = UserSerializer()
     author = UserSerializer(required=False, read_only=True)
-    pro_users = UserSerializer(many=True, required=False)
-    con_users = UserSerializer(many=True, required=False)
+    pro_users = UserSerializer(many=True, required=False, read_only=True)
+    con_users = UserSerializer(many=True, required=False, read_only=True)
 
     class Meta:
         model = Bet
+        read_only_fields = ('status',)

@@ -21,11 +21,13 @@ class BetFilter(django_filters.FilterSet):
 
 
 class BetRetreive(RetrieveAPIView):
+    """ Gets information about single bet """
     model = Bet
     serializer_class = BetSerializer
 
 
 class BetListCreate(ListCreateAPIView):
+    """ Returns list of bets(:get) or creates new bet(:post) """
     model = Bet
     serializer_class = BetSerializer
     filter_class = BetFilter

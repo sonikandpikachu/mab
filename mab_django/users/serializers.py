@@ -33,8 +33,10 @@ class CreateUserSerializer(serializers.ModelSerializer):
         return attrs
 
     def restore_object(self, attrs, instance=None):
-        return get_user_model().objects.create_user(
-            email=attrs['email'], password=attrs['password'])
+        User = get_user_model()
+        user = User(email=attrs['email'])
+        user.set_password(attrs['password'])
+        return user
 
 
 class SignInSerializer(serializers.Serializer):

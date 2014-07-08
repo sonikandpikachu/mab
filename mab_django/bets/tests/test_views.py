@@ -31,6 +31,7 @@ class BetViewsTest(MabTestCase):
             'end_datetime': datetime.now() + timedelta(days=7),
         }
         response = self.client.post(url, data=data)
+        print response
         self.assertEqual(response.status_code, 201)
         self.assertTrue(
             Bet.objects.get(short_description=data['short_description']))
