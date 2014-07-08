@@ -66,7 +66,7 @@ class BetViewsTest(MabTestCase):
         expected_bets = [b.id for b in Bet.objects.filter(judge=judge1)]
         self.assertEqual([b['id'] for b in content], expected_bets)
         # sorting by endtime and judge:
-        data = {'judge__email': judge2.email, 'end_datetime': str(date2)}
+        data = {'judge__email': judge2.email, 'end_datetime': date2}
         response = self.client.get(url, data)
         content = json.loads(response.content)
         expected_bets = [b.id for b in Bet.objects.filter(
