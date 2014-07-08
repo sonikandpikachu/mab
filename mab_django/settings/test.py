@@ -26,8 +26,8 @@ EMAIL_FILE_PATH = join(PROJECT_ROOT, 'test_mails/')
 import logging
 logging.disable(logging.CRITICAL)
 
-# Remove debug_toolbar from testing
-INSTALLED_APPS = list(INSTALLED_APPS)
-del INSTALLED_APPS['debug_toolbar']
-MIDDLEWARE_CLASSES = list(MIDDLEWARE_CLASSES)
-del MIDDLEWARE_CLASSES['debug_toolbar.middleware.DebugToolbarMiddleware']
+# # Remove debug_toolbar from testing
+# INSTALLED_APPS = list(INSTALLED_APPS)
+# del INSTALLED_APPS['debug_toolbar']
+# MIDDLEWARE_CLASSES = list(MIDDLEWARE_CLASSES)
+# del MIDDLEWARE_CLASSES['debug_toolbar.middleware.DebugToolbarMiddleware']

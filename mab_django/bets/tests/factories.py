@@ -13,6 +13,7 @@ class BetFactory(factory.DjangoModelFactory):
         lambda n: 'bet short_description#{}'.format(n))
     end_datetime = datetime.now() + timedelta(days=7)
     judge = factory.SubFactory(UserFactory)
+    author = factory.SubFactory(UserFactory)
 
     @factory.post_generation
     def pro_users(self, create, extracted, **kwargs):
@@ -24,7 +25,7 @@ class BetFactory(factory.DjangoModelFactory):
                 self.pro_users.add(user)
 
     @factory.post_generation
-    def con_user(self, create, extracted, **kwargs):
+    def con_users(self, create, extracted, **kwargs):
         if not create:
             return
 

@@ -1,7 +1,5 @@
 # Django settings for jetme project.
 from os.path import dirname, abspath, join
-from django.conf.global_settings import (TEMPLATE_CONTEXT_PROCESSORS as
-    TEMPLATE_CONTEXT_PROCESSORS_DEFAULT)
 
 # Absolute filesystem path to the Django project directory(jetme):
 DJANGO_ROOT = dirname(dirname(abspath(__file__)))
@@ -179,5 +177,4 @@ REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.IsAuthenticated',
     ),
-    'EXCEPTION_HANDLER': 'core.api.exception_handler',
 }

@@ -5,6 +5,13 @@ from django_extensions.db.models import TimeStampedModel
 
 
 class Bet(TimeStampedModel):
+    status = models.CharField(max_length=31, default='not_executed', choices=(
+        ('not_executed', 'not_executed'),
+        ('pro_won', 'pro_won'),
+        ('con_won', 'con_won'),
+        ('both_won', 'both_won'),
+        ('both_lost', 'both_lost'))
+    )
     short_description = models.CharField(max_length=127, blank=False)
     long_description = models.TextField(blank=True)
     end_datetime = models.DateTimeField()

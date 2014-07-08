@@ -7,53 +7,16 @@ from django.db import models
 
 class Migration(SchemaMigration):
 
-    depends_on = (
-        ("users", "0001_initial"),
-    )
-
     def forwards(self, orm):
-        # Adding model 'Bet'
-        db.create_table(u'bets_bet', (
-            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('created', self.gf('django.db.models.fields.DateTimeField')(default=datetime.datetime.now, blank=True)),
-            ('modified', self.gf('django.db.models.fields.DateTimeField')(default=datetime.datetime.now, blank=True)),
-            ('short_description', self.gf('django.db.models.fields.CharField')(max_length=127)),
-            ('long_description', self.gf('django.db.models.fields.TextField')(blank=True)),
-            ('end_datetime', self.gf('django.db.models.fields.DateTimeField')()),
-            ('author', self.gf('django.db.models.fields.related.ForeignKey')(related_name='own_bets', to=orm['users.User'])),
-            ('judge', self.gf('django.db.models.fields.related.ForeignKey')(related_name='judged_bets', null=True, to=orm['users.User'])),
-            ('is_private', self.gf('django.db.models.fields.BooleanField')(default=True)),
-        ))
-        db.send_create_signal(u'bets', ['Bet'])
-
-        # Adding M2M table for field pro_users on 'Bet'
-        m2m_table_name = db.shorten_name(u'bets_bet_pro_users')
-        db.create_table(m2m_table_name, (
-            ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
-            ('bet', models.ForeignKey(orm[u'bets.bet'], null=False)),
-            ('user', models.ForeignKey(orm[u'users.user'], null=False))
-        ))
-        db.create_unique(m2m_table_name, ['bet_id', 'user_id'])
-
-        # Adding M2M table for field con_users on 'Bet'
-        m2m_table_name = db.shorten_name(u'bets_bet_con_users')
-        db.create_table(m2m_table_name, (
-            ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
-            ('bet', models.ForeignKey(orm[u'bets.bet'], null=False)),
-            ('user', models.ForeignKey(orm[u'users.user'], null=False))
-        ))
-        db.create_unique(m2m_table_name, ['bet_id', 'user_id'])
+        # Adding field 'Bet.status'
+        db.add_column(u'bets_bet', 'status',
+                      self.gf('django.db.models.fields.CharField')(default='not_executed', max_length=31),
+                      keep_default=False)
 
 
     def backwards(self, orm):
-        # Deleting model 'Bet'
-        db.delete_table(u'bets_bet')
-
-        # Removing M2M table for field pro_users on 'Bet'
-        db.delete_table(db.shorten_name(u'bets_bet_pro_users'))
-
-        # Removing M2M table for field con_users on 'Bet'
-        db.delete_table(db.shorten_name(u'bets_bet_con_users'))
+        # Deleting field 'Bet.status'
+        db.delete_column(u'bets_bet', 'status')
 
 
     models = {
@@ -82,7 +45,8 @@ class Migration(SchemaMigration):
             'long_description': ('django.db.models.fields.TextField', [], {'blank': 'True'}),
             'modified': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now', 'blank': 'True'}),
             'pro_users': ('django.db.models.fields.related.ManyToManyField', [], {'related_name': "'pro_bets'", 'symmetrical': 'False', 'to': u"orm['users.User']"}),
-            'short_description': ('django.db.models.fields.CharField', [], {'max_length': '127'})
+            'short_description': ('django.db.models.fields.CharField', [], {'max_length': '127'}),
+            'status': ('django.db.models.fields.CharField', [], {'default': "'not_executed'", 'max_length': '31'})
         },
         u'contenttypes.contenttype': {
             'Meta': {'ordering': "('name',)", 'unique_together': "(('app_label', 'model'),)", 'object_name': 'ContentType', 'db_table': "'django_content_type'"},
