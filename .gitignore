@@ -12,6 +12,18 @@ buildbot/
 *.log
 
 !.gitignore
+!.gitattributes
+!.jshintrc
+!.travis.yml
+!.editorconfig
+!.bowerrc
 
 *.sublime-project
 *.sublime-workspace
+
+
+
+mab_angular/node_modules/
+mab_angular/dist/
+mab_angular/bower_components/
+
