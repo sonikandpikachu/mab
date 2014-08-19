@@ -83,6 +83,7 @@ TEMPLATE_LOADERS = (
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.locale.LocaleMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -111,6 +112,7 @@ INSTALLED_APPS = (
     # *** Installed apps
     'south',
     'rest_framework_swagger',
+    'corsheaders',
 
     # *** Projects apps
     'bets',
@@ -175,9 +177,9 @@ COVERAGE_REPORT_HTML_OUTPUT_DIR = join(PROJECT_ROOT, 'cover/')
 REST_FRAMEWORK = {
     'DATETIME_FORMAT': 'iso-8601',
     'TEST_REQUEST_DEFAULT_FORMAT': 'json',
-    'DEFAULT_PERMISSION_CLASSES': (
-        'rest_framework.permissions.IsAuthenticated',
-    ),
+    # 'DEFAULT_PERMISSION_CLASSES': (
+    #     'rest_framework.permissions.IsAuthenticated',
+    # ),
 }
 
 # rest framework swagger settings:

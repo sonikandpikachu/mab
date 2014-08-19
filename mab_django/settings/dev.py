@@ -39,3 +39,5 @@ EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
 #EMAIL_BACKEND = 'eml_email_backend.EmailBackend'
 EMAIL_FILE_PATH = join(PROJECT_ROOT, 'mails/')
 DEFAULT_FROM_EMAIL = 'webmaster@localhost'
+
+CORS_ORIGIN_ALLOW_ALL = True

@@ -2,7 +2,7 @@
 Project structure, main design ideas and instalation guide
 **********************************************************
 
-Structure:
+General Structure:
 ----------
 
 1. mab_angular - folder with angular part of the project.
@@ -11,8 +11,8 @@ Structure:
 4. Makefile - file with main project commands
 
 
-Instalation
------------
+Django Instalation
+------------------
 
 1. Create postgres user and db:
 
@@ -50,3 +50,13 @@ Django details:
    - custom - non-in-git settings - secret keys and other secret info for each machine.
 
 2. Core - base app without models but with general helpers, utils and abstract objects.
+
+
+
+Angular instalation:
+--------------------
+
+1. Install Yeoman and angular generator for him. (Details: https://github.com/yeoman/generator-angular)
+
+2. TODO...
+
