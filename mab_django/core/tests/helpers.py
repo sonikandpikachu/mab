@@ -4,7 +4,7 @@ import shutil
 from django.contrib.auth import get_user_model
 from django.conf import settings
 
-from rest_framework.test import APITestCase
+from rest_framework.test import APITestCase, APIClient
 
 from users.tests.factories import UserFactory
 
@@ -15,6 +15,7 @@ class MabTestCase(APITestCase):
     def setUp(self):
         self.user = UserFactory(
             username='user', email='user@gmail.com', password='user')
+        self.client = APIClient()
 
     def login_as(self, user):
         self.assertTrue(self.client.login(

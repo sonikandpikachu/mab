@@ -9,7 +9,7 @@ from ..models import User
 
 class UserViewTest(MabTestCase):
 
-    def test_user_retreve(self):
+    def test_user_retreive(self):
         self.login_as(self.user)
         user = UserFactory()
         url = reverse('api:users', args=(user.id,))
@@ -22,10 +22,13 @@ class UserViewTest(MabTestCase):
         data = {'email': 'test_user@gmail.com', 'password': 'test_password'}
         response = self.client.post(url, data)
         self.assertEqual(response.status_code, 201)
-        self.assertTrue(User.objects.get(email=data['email']))
+        content = json.loads(response.content)
+        user = User.objects.get(email=data['email'])
+        self.assertEqual(content['auth_token'], user.auth_token.key)
 
     def test_signin(self):
         url = reverse('api:signin')
+        # signing in new user
         response = self.client.get(url)
         self.assertEqual(response.status_code, 405)
         data = {
@@ -35,3 +38,11 @@ class UserViewTest(MabTestCase):
         response = self.client.post(url, data=data)
         self.assertEqual(response.status_code, 200)
         self.assertTrue(User.objects.get(email=data['email']))
+
+    def test_current_user(self):
+        url = reverse("api:current_user")
+        self.login_as(self.user)
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        content = json.loads(response.content)
+        self.assertEqual(content['email'], self.user.email)

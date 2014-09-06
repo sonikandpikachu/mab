@@ -20,6 +20,9 @@ DATABASES = {
     },
 }
 
+REST_FRAMEWORK['DEFAULT_AUTHENTICATION_CLASSES'] = (
+    'rest_framework.authentication.SessionAuthentication',)
+
 MEDIA_ROOT = join(PROJECT_ROOT, 'testmedia')
 EMAIL_FILE_PATH = join(PROJECT_ROOT, 'test_mails/')
 

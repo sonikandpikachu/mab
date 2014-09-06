@@ -113,6 +113,7 @@ INSTALLED_APPS = (
     'south',
     'rest_framework_swagger',
     'corsheaders',
+    'rest_framework.authtoken',
 
     # *** Projects apps
     'bets',
@@ -177,9 +178,12 @@ COVERAGE_REPORT_HTML_OUTPUT_DIR = join(PROJECT_ROOT, 'cover/')
 REST_FRAMEWORK = {
     'DATETIME_FORMAT': 'iso-8601',
     'TEST_REQUEST_DEFAULT_FORMAT': 'json',
-    # 'DEFAULT_PERMISSION_CLASSES': (
-    #     'rest_framework.permissions.IsAuthenticated',
-    # ),
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.BasicAuthentication',
+    ),
 }
 
 # rest framework swagger settings:

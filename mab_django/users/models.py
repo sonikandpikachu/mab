@@ -1,4 +1,9 @@
 from django.contrib.auth.models import AbstractUser, BaseUserManager
+from django.contrib.auth import get_user_model
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+
+from rest_framework.authtoken.models import Token
 
 
 AbstractUser._meta.get_field('email')._unique = True
@@ -27,3 +32,10 @@ class User(AbstractUser):
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
     objects = UserManager()
+
+    def save(self, *args, **kwargs):
+        created = self.pk is None
+        saved = super(User, self).save(*args, **kwargs)
+        if created:
+            Token.objects.create(user=self)
+        return saved

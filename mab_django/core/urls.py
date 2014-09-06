@@ -27,6 +27,11 @@ urlpatterns = patterns("",
         name="users"
     ),
     url(
+        regex=r"current-user/$",
+        view=users_views.UserView.as_view(),
+        name="current_user"
+    ),
+    url(
         regex=r"signin/$",
         view=users_views.SignInView.as_view(),
         name="signin"

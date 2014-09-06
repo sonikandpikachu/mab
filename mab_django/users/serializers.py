@@ -8,7 +8,7 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = get_user_model()
-        fields = ('email',)
+        fields = ('email', 'is_staff')
 
     def validate(self, attrs):
         if not get_user_model().objects.filter(email=attrs['email']).exists():
@@ -23,8 +23,9 @@ class CreateUserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = get_user_model()
-        fields = ('email', 'password')
-        write_only_fields = fields
+        fields = ('email', 'password', 'auth_token')
+        read_only_fields = ('auth_token',)
+        write_only_fields = ('password', 'email')
 
     def validate(self, attrs):
         if get_user_model().objects.filter(email=attrs['email']).exists():
