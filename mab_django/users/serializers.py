@@ -5,21 +5,15 @@ from rest_framework import serializers
 
 
 class UserSerializer(serializers.ModelSerializer):
+    """ Returns users info """
 
     class Meta:
         model = get_user_model()
-        fields = ('email', 'is_staff')
-
-    def validate(self, attrs):
-        if not get_user_model().objects.filter(email=attrs['email']).exists():
-            raise serializers.ValidationError("no user with such email")
-        return attrs
-
-    def restore_object(self, attrs, instance=None):
-        return get_user_model().objects.get(email=attrs['email'])
+        fields = ('email', 'is_staff', 'auth_token')
 
 
 class CreateUserSerializer(serializers.ModelSerializer):
+    """ Creates new user """
 
     class Meta:
         model = get_user_model()
