@@ -43,11 +43,9 @@ class CreateUserSerializer(serializers.ModelSerializer):
 class SignInSerializer(serializers.Serializer):
     """ User authentication """
 
-    email = serializers.EmailField()
-    password = serializers.CharField()
-
-    class Meta:
-        write_only_fields = ('email', 'password')
+    email = serializers.EmailField(write_only=True)
+    password = serializers.CharField(write_only=True)
+    auth_token = serializers.CharField(read_only=True)
 
     def validate(self, attrs):
         self.user = auth.authenticate(

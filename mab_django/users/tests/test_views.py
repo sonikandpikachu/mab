@@ -36,6 +36,7 @@ class UserViewTest(MabTestCase):
             'password': self.user.username,
         }
         response = self.client.post(url, data=data)
+        print response.content
         self.assertEqual(response.status_code, 200)
         self.assertTrue(User.objects.get(email=data['email']))
 

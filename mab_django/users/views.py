@@ -8,33 +8,26 @@ from .models import User
 from .serializers import UserSerializer, CreateUserSerializer, SignInSerializer
 
 
-class UserRetreive(RetrieveAPIView):
-    """ Returns users info """
-    model = User
-    serializer_class = UserSerializer
-
-
-class SignInView(APIView):
-    """ POST: sign in with users email and password,
+class SignInView(CreateAPIView):
+    """ POST: sign in with users email and password, returns user data with auth_token
         email -- users email
         password -- users password
-        GET: returns current user if he is logged in.
     """
     permission_classes = []
     authentication_classes = []
-    serializer_class = SignInSerializer
 
     def post(self, request, format=None):
         serializer = SignInSerializer(data=request.DATA)
         if serializer.is_valid():
-            auth.login(request, serializer.object)
-            return Response(status=200)
+            user = serializer.object
+            auth.login(request, user)
+            return Response(SignInSerializer(user).data, status=200)
         else:
             return Response(serializer.errors, status=400)
 
 
 class UserView(APIView):
-    """ GET: returns current user if he is logged in. """
+    """ GET: returns current user data if he is logged in. """
 
     def get(self, request, *args, **kwargs):
         if request.user.is_authenticated():
@@ -47,7 +40,12 @@ class UserView(APIView):
 class UserCreate(CreateAPIView):
     """ POST: creates new users by email and password,
     """
-    model = User
     serializer_class = CreateUserSerializer
     permission_classes = []
     authentication_classes = []
+
+
+class UserRetreive(RetrieveAPIView):
+    """ Returns users info """
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
