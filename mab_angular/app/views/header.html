@@ -1,6 +1,12 @@
-<div class="header" ng-controller="HeaderController">
-  <ul class="nav nav-pills pull-right" ng-repeat="h in hrefs">
-    <li ng-class="h.active"><a ng-href="{{ h.href }}" ng-click="{{test()}}">{{ h.name }}</a></li>
+<div class="header" ng-controller="HeaderCtrl as header">
+  <ul class="nav nav-pills pull-right">
+    <li><a ng-show="header.user.isAuthenticated" ng-click="header.signout()">Sign out</a></li>
+    <li><a ng-href="#/signin" ng-hide="header.user.isAuthenticated">Sign in</a></li>
   </ul>
+
+  <ul class="nav nav-pills pull-right" ng-repeat="h in header.hrefs">
+    <li ng-class="h.active"><a ng-href="{{ h.href }}">{{ h.name }}</a></li>
+  </ul>
+
   <h3 class="text-muted">Make Any Bet</h3>
 </div>

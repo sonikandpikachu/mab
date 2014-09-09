@@ -17,22 +17,35 @@ angular
     'ngSanitize',
     'ngTouch',
   ])
+
   .config(function($routeProvider) {
     $routeProvider
       .when('/', {
         templateUrl: 'views/main.html',
         controller: 'MainCtrl'
       })
+
       .when('/about', {
         templateUrl: 'views/about.html',
       })
-      .when('/users', {
-        templateUrl: 'views/users.html',
-        controller: 'UsersController'
-      })
+
+      // .when('/profile', {
+      //   templateUrl: 'views/users/users.html',
+      //   controller: 'CurrentUserCtrl',
+      // })
+
       .when('/_header', {
         templateUrl: 'views/header.html'
       })
+
+      .when('/signin', {
+        templateUrl: 'views/signin.html',
+      })
+
+      .when('/signup', {
+        templateUrl: 'views/signup.html',
+      })
+
       .otherwise({
         redirectTo: '/'
       });

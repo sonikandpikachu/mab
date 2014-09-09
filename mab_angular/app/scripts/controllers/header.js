@@ -1,33 +1,57 @@
 'use strict';
 
-/**
- * @ngdoc function
- * @name mab.controller:HeaderController
- * @description
- * # HeaderController
- * Controller of the mab
- */
-angular.module('mab')
+(function() {
+  angular.module('mab')
+    .controller('HeaderCtrl', ['$scope', '$location', 'users', HeaderCtrl]);
 
-.controller('HeaderController', ['$scope', '$location', function($scope, $location) {
-  $scope.hrefs = [
-    {href: '#/about', name: 'About', active: ''},
-    {href: '#/signup', name: 'Registration', active: ''},
-    {href: '#/', name: 'Home', active: 'active'},
-  ];
+  function HeaderCtrl($scope, $location, users) {
+    var vm = this;
+    vm.loc = $location.path();
+    vm.user = users.user;
+    vm.hrefs = hrefs();
+    vm.signout = signout;
 
-  $scope.loc = $location.path();
+    $scope.$on('$locationChangeSuccess', chooseActiveHref);
+    $scope.$watch(function() { return users.user; }, initHrefs);
 
-  $scope.$on('$locationChangeSuccess', function() {
-    angular.forEach($scope.hrefs, function(value) {
+    function initHrefs(user) {
+      vm.user = user;
+      vm.hrefs = hrefs();
+    }
+
+    function hrefs() {
+      var _hrefs = null;
+      if (users.user.isAuthenticated) {
+        _hrefs = [
+          {href: '#/about', name: 'About', active: ''},
+          {href: '#/', name: 'Home', active: 'active'},
+        ];
+      } else {
+        _hrefs = [
+          {href: '#/', name: 'Home', active: 'active'},
+        ];
+      }
+      return _hrefs;
+    }
+
+    function chooseActiveHref() {
+      angular.forEach(vm.hrefs, chooseActive);
+    }
+
+    function chooseActive(value) {
       var path = $location.path();
       if (value.href.indexOf(path, value.href.length - path.length) !== -1) {
         value.active = 'active';
-        console.log(value.href + ' ' + value.active);
       } else {
         value.active = '';
       }
-    });
-  });
+    }
 
-}]);
+    function signout() {
+      users.signout();
+      $location.path('/');
+    }
+
+  }
+
+})();

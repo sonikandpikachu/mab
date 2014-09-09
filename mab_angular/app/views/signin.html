@@ -1,0 +1,19 @@
+<div ng-controller="SignInCtrl as signin">
+  <form name="recipeForm" ng-submit="signin.signin()" form-autofill-fix>
+
+    <div style="color:red" ng-show="signin.errors.non_field_errors">{{ signin.errors.non_field_errors }}</div>
+
+    Email:
+    <input type="text" ng-model="signin.user.email">
+    <div style="color:red" ng-show="signin.errors.email">{{ signin.errors.email }}</div>
+    <br/>
+    Password:
+    <input type="password" ng-model="signin.user.password">
+    <div style="color:red" ng-show="signin.errors.password">{{ signin.errors.password }}</div>
+    <br/>
+    <a ng-href="#/signup"> Register </a>
+    <br/>
+
+    <input type="submit"/>
+  </form>
+</div>

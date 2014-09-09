@@ -36,7 +36,6 @@ SOUTH_TESTS_MIGRATE = False  # To disable migrations and use syncdb instead
 SKIP_SOUTH_TESTS = True      # To disable South's own unit tests
 
 EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
-#EMAIL_BACKEND = 'eml_email_backend.EmailBackend'
 EMAIL_FILE_PATH = join(PROJECT_ROOT, 'mails/')
 DEFAULT_FROM_EMAIL = 'webmaster@localhost'
 

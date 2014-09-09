@@ -4,6 +4,7 @@ from rest_framework.generics import CreateAPIView, RetrieveAPIView
 from rest_framework.views import APIView
 from rest_framework.response import Response
 
+from mailing import send_templated_email
 from .models import User
 from .serializers import UserSerializer, CreateUserSerializer, SignInSerializer
 
@@ -39,6 +40,10 @@ class UserCreate(CreateAPIView):
     serializer_class = CreateUserSerializer
     permission_classes = []
     authentication_classes = []
+
+    def post_save(self, obj, created=False):
+        if created:
+            send_templated_email('signup', {}, recipients=[obj])
 
 
 class UserRetreive(RetrieveAPIView):

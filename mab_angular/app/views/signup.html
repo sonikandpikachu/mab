@@ -1,0 +1,21 @@
+<div ng-controller="SignUpCtrl as signup">
+  <form name="recipeForm" ng-submit="signup.signup()" form-autofill-fix>
+
+    <div style="color:red" ng-show="signup.errors.non_field_errors">{{ signup.errors.non_field_errors }}</div>
+
+    Email:
+    <input type="text" ng-model="signup.user.email">
+    <div style="color:red" ng-show="signup.errors.email">{{ signup.errors.email }}</div>
+    <br/>
+    Password:
+    <input type="password" ng-model="signup.user.password">
+    <div style="color:red" ng-show="signup.errors.password">{{ signup.errors.password }}</div>
+    <br/>
+    Repeat Password:
+    <input type="password" ng-model="signup.user.password2">
+    <div style="color:red" ng-show="signup.errors.password2">{{ signup.errors.password2 }}</div>
+    <br/>
+
+    <input type="submit"/>
+  </form>
+</div>

@@ -13,9 +13,21 @@ class MabTestCase(APITestCase):
     """ Helper Test case - general for all project"""
 
     def setUp(self):
-        self.user = UserFactory(
-            username='user', email='user@gmail.com', password='user')
         self.client = APIClient()
+
+    @property
+    def user(self):
+        if not hasattr(self, '_user'):
+            self._user = UserFactory(
+                username='user', email='user@gmail.com', password='user')
+        return self._user
+
+    @property
+    def admin(self):
+        if not hasattr(self, '_admin'):
+            self._admin = UserFactory(username='admin', email='admin@i.ua',
+                is_superuser=True, is_staff=True, password='admin')
+        return self._admin
 
     def login_as(self, user):
         self.assertTrue(self.client.login(

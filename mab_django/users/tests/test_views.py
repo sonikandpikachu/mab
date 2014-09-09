@@ -1,6 +1,7 @@
 import json
 
 from django.core.urlresolvers import reverse
+from django.core import mail
 
 from core.tests import MabTestCase
 from .factories import UserFactory
@@ -25,6 +26,8 @@ class UserViewTest(MabTestCase):
         content = json.loads(response.content)
         user = User.objects.get(email=data['email'])
         self.assertEqual(content['auth_token'], user.auth_token.key)
+        self.assertEqual(len(mail.outbox), 1)
+        self.assertEqual(mail.outbox[0].to, ['test_user@gmail.com'])
 
     def test_signin(self):
         url = reverse('api:signin')
