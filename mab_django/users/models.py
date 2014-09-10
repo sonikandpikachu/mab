@@ -30,6 +30,9 @@ class User(AbstractUser):
     REQUIRED_FIELDS = []
     objects = UserManager()
 
+    def __unicode__(self):
+        return self.email
+
     def save(self, *args, **kwargs):
         created = self.pk is None
         saved = super(User, self).save(*args, **kwargs)

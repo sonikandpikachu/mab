@@ -5,7 +5,7 @@ from django.core.urlresolvers import reverse
 
 from core.tests import MabTestCase
 from users.tests.factories import UserFactory
-from .factories import BetFactory
+from .factories import BetSubjectFactory
 from ..models import Bet
 
 
@@ -16,7 +16,7 @@ class BetViewsTest(MabTestCase):
         self.login_as(self.user)
 
     def test_bet_retreive(self):
-        bet = BetFactory()
+        bet = BetSubjectFactory()
         url = reverse('api:bets', args=(bet.pk, ))
         response = self.client.get(url)
         content = json.loads(response.content)
@@ -45,7 +45,7 @@ class BetViewsTest(MabTestCase):
         for short_description in 'desc1', 'desc2':
             for judge in judge1, judge2:
                 for dt in date1, date2:
-                    bets.append(BetFactory(
+                    bets.append(BetSubjectFactory(
                         short_description=short_description,
                         judge=judge,
                         end_datetime=date1

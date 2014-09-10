@@ -1,16 +1,14 @@
 from rest_framework import serializers
 
 from users.serializers import UserSerializer
-from users.models import User
-from .models import Bet
+from .models import Bet, BetSubject
 
 
-class BetSerializer(serializers.ModelSerializer):
+class BetSubjectSerializer(serializers.ModelSerializer):
     judge = UserSerializer()
     author = UserSerializer(required=False, read_only=True)
-    pro_users = UserSerializer(many=True, required=False, read_only=True)
-    con_users = UserSerializer(many=True, required=False, read_only=True)
+    users = UserSerializer(many=True, required=False, read_only=True)
 
     class Meta:
-        model = Bet
+        model = BetSubject
         read_only_fields = ('status',)

@@ -2,11 +2,11 @@ import django_filters
 from rest_framework.generics import RetrieveAPIView, ListCreateAPIView
 from rest_framework import filters
 
-from .models import Bet
-from .serializers import BetSerializer
+from .models import Bet, BetSubject
+from .serializers import BetSubjectSerializer
 
 
-class BetFilter(django_filters.FilterSet):
+class BetSubjectFilter(django_filters.FilterSet):
     short_description = django_filters.CharFilter(
         name='short_description', lookup_type='contains')
     long_description = django_filters.CharFilter(
@@ -15,22 +15,22 @@ class BetFilter(django_filters.FilterSet):
         name='end_datetime', lookup_type="gte")
 
     class Meta:
-        model = Bet
+        model = BetSubject
         fields = ['short_description', 'long_description', 'end_datetime',
-            'con_users', 'pro_users', 'judge__email']
+            'users', 'judge__email']
 
 
 class BetRetreive(RetrieveAPIView):
     """ Gets information about single bet """
-    model = Bet
-    serializer_class = BetSerializer
+    model = BetSubject
+    serializer_class = BetSubjectSerializer
 
 
 class BetListCreate(ListCreateAPIView):
     """ Returns list of bets(:get) or creates new bet(:post) """
-    model = Bet
-    serializer_class = BetSerializer
-    filter_class = BetFilter
+    model = BetSubject
+    serializer_class = BetSubjectSerializer
+    filter_class = BetSubjectFilter
     filter_backends = (filters.DjangoFilterBackend,)
 
     def pre_save(self, bet):

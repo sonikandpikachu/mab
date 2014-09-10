@@ -3,32 +3,31 @@ from datetime import datetime, timedelta
 import factory
 
 from users.tests.factories import UserFactory
-from ..models import Bet
+from ..models import BetSubject, Bet
 
 
-class BetFactory(factory.DjangoModelFactory):
-    FACTORY_FOR = Bet
+class BetSubjectFactory(factory.DjangoModelFactory):
+    FACTORY_FOR = BetSubject
 
     short_description = factory.Sequence(
-        lambda n: 'bet short_description#{}'.format(n))
+        lambda n: 'bet subject short_description#{}'.format(n))
     end_datetime = datetime.now() + timedelta(days=7)
     judge = factory.SubFactory(UserFactory)
     author = factory.SubFactory(UserFactory)
 
     @factory.post_generation
-    def pro_users(self, create, extracted, **kwargs):
+    def users(self, create, extracted, **kwargs):
         if not create:
             return
 
         if extracted:
             for user in extracted:
-                self.pro_users.add(user)
+                BetFactory(bet_subject=self, user=user)
 
-    @factory.post_generation
-    def con_users(self, create, extracted, **kwargs):
-        if not create:
-            return
 
-        if extracted:
-            for user in extracted:
-                self.con_user.add(user)
+class BetFactory(factory.DjangoModelFactory):
+    FACTORY_FOR = Bet
+
+    user = factory.SubFactory(UserFactory)
+    bet_subject = factory.SubFactory(BetSubjectFactory)
+    description = factory.Sequence(lambda n: 'bet description#{}'.format(n))
