@@ -12,3 +12,12 @@ class BetSubjectSerializer(serializers.ModelSerializer):
     class Meta:
         model = BetSubject
         read_only_fields = ('status',)
+
+
+class BetSerializer(serializers.ModelSerializer):
+    bet_subject = BetSubjectSerializer(read_only=True)
+    user = UserSerializer(read_only=True)
+
+    class Meta:
+        model = Bet
+        read_only_fields = ('created', 'is_success')

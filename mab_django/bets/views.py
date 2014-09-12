@@ -1,9 +1,13 @@
+from django.http import Http404
+
 import django_filters
-from rest_framework.generics import RetrieveAPIView, ListCreateAPIView
+from rest_framework.generics import (
+    RetrieveAPIView, ListCreateAPIView, CreateAPIView)
 from rest_framework import filters
 
 from .models import Bet, BetSubject
-from .serializers import BetSubjectSerializer
+from .managers import BetSubjectManager
+from .serializers import BetSubjectSerializer, BetSerializer
 
 
 class BetSubjectFilter(django_filters.FilterSet):
@@ -16,22 +20,47 @@ class BetSubjectFilter(django_filters.FilterSet):
 
     class Meta:
         model = BetSubject
-        fields = ['short_description', 'long_description', 'end_datetime',
-            'users', 'judge__email']
+        fields = [
+            'short_description', 'long_description', 'end_datetime',
+            'users', 'judge__email', 'is_private']
 
 
-class BetRetreive(RetrieveAPIView):
-    """ Gets information about single bet """
+class BetSubjectRetreive(RetrieveAPIView):
+    """ Gets information about single bet subject """
     model = BetSubject
     serializer_class = BetSubjectSerializer
 
 
-class BetListCreate(ListCreateAPIView):
-    """ Returns list of bets(:get) or creates new bet(:post) """
+class BetSubjectListCreate(ListCreateAPIView):
+    """
+    Returns list of bet subjects(:get) or creates new bet subject(:post)
+    """
     model = BetSubject
     serializer_class = BetSubjectSerializer
     filter_class = BetSubjectFilter
     filter_backends = (filters.DjangoFilterBackend,)
 
+    def get_queryset(self, *args, **kwargs):
+        user = self.request.user
+        queryset = super(BetSubjectListCreate, self).get_queryset(
+            *args, **kwargs)
+        if not user.is_superuser:
+            queryset = queryset.filter(BetSubjectManager.user_query(user))
+        return queryset
+
+    def pre_save(self, bet_subject):
+        bet_subject.author = self.request.user
+
+
+class BetCreate(CreateAPIView):
+    model = Bet
+    serializer_class = BetSerializer
+
     def pre_save(self, bet):
-        bet.author = self.request.user
+        user = self.request.user
+        bet_subject_pk = int(self.kwargs['bet_subject_pk'])
+        if not BetSubject.objects.get_user_queryset(
+                user).filter(pk=bet_subject_pk).exists():
+            raise Http404
+        bet.bet_subject_id = bet_subject_pk
+        bet.user = user

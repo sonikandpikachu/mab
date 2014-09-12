@@ -9,7 +9,12 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = get_user_model()
-        fields = ('email', 'is_staff', 'auth_token')
+        fields = ('email',)
+
+    def restore_object(self, attrs, instance=None):
+        User = get_user_model()
+        user = User.objects.get_or_create(email=attrs['email'])[0]
+        return user
 
 
 class CreateUserSerializer(serializers.ModelSerializer):

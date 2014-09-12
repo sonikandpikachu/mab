@@ -4,6 +4,7 @@ from django.conf import settings
 from django_extensions.db.models import TimeStampedModel
 
 from mailing import send_templated_email
+from .managers import BetSubjectManager
 
 
 class BetSubject(TimeStampedModel):
@@ -18,20 +19,23 @@ class BetSubject(TimeStampedModel):
         settings.AUTH_USER_MODEL, related_name='own_bets')
     judge = models.ForeignKey(
         settings.AUTH_USER_MODEL, null=True, related_name="judged_bets")
-    users = models.ManyToManyField(settings.AUTH_USER_MODEL,
-        related_name='bets', through='Bet')
+    users = models.ManyToManyField(
+        settings.AUTH_USER_MODEL, related_name='bets', through='Bet')
     is_private = models.BooleanField(default=True)
+    # manager
+    objects = BetSubjectManager()
 
     def __unicode__(self):
-        return "Bet: {}".format(self.short_description)
+        return "{}".format(self.short_description)
 
     def mail_judge_about_creation(self):
-        send_templated_email('judge_bet_creation', {'bet_subject': self},
+        send_templated_email(
+            'judge_bet_creation', {'bet_subject': self},
             recipients=[self.judge])
 
 
 class Bet(TimeStampedModel):
-    bet_subject = models.ForeignKey('BetSubject')
+    bet_subject = models.ForeignKey('BetSubject', related_name='bets')
     user = models.ForeignKey(settings.AUTH_USER_MODEL)
     description = models.TextField()
     is_success = models.NullBooleanField()

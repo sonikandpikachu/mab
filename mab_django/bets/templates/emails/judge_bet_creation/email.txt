@@ -4,4 +4,4 @@ You were elected as judge for bet subject:
 
 (Link: TODO!)
 
-You will have define bet winners at {{ bet_subject.end_datetime }}
+You will have define bet winners at {{ bet_subject.end_datetime }}.

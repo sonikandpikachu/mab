@@ -3,17 +3,23 @@ from django.conf.urls import patterns, url
 from bets import views as bets_views
 from users import views as users_views
 
-urlpatterns = patterns("",
+urlpatterns = patterns(
+    "",
     # bets app urls:
     url(
-        regex=r"bets/(?P<pk>\d+)/$",
-        view=bets_views.BetRetreive.as_view(),
-        name="bets"
+        regex=r"bet-subjects/(?P<pk>\d+)/$",
+        view=bets_views.BetSubjectRetreive.as_view(),
+        name="bet_subjects"
     ),
     url(
-        regex=r"bets/$",
-        view=bets_views.BetListCreate.as_view(),
-        name="bets"
+        regex=r"bet-subjects/$",
+        view=bets_views.BetSubjectListCreate.as_view(),
+        name="bet_subjects"
+    ),
+    url(
+        regex=r"bet-subjects/(?P<bet_subject_pk>\d+)/bet/$",
+        view=bets_views.BetCreate.as_view(),
+        name="bet"
     ),
     # users app urls:
     url(
