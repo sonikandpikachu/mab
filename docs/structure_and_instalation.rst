@@ -58,5 +58,16 @@ Angular instalation:
 
 1. Install Yeoman and angular generator for him. (Details: https://github.com/yeoman/generator-angular)
 
-2. TODO...
+2. Install node modules and bower_components (execute in angular directory):
+
+    .. code:: bash
+
+        npm install
+        bower install
+
+3. Run tests: grunt test
+
+4. Start site (with watch task): grunt serve
+
+5. Build an optimized, production-ready version of app: grunt
 
