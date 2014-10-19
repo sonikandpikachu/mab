@@ -24,6 +24,7 @@
       if (users.user.isAuthenticated) {
         _hrefs = [
           {href: '#/about', name: 'About', active: ''},
+          {href: '#/bet-subjects', name: 'Bets', active: ''},
           {href: '#/', name: 'Home', active: 'active'},
         ];
       } else {

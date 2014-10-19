@@ -29,21 +29,24 @@ angular
         templateUrl: 'views/about.html',
       })
 
-      // .when('/profile', {
-      //   templateUrl: 'views/users/users.html',
-      //   controller: 'CurrentUserCtrl',
-      // })
-
       .when('/_header', {
         templateUrl: 'views/header.html'
       })
 
+      // users
       .when('/signin', {
         templateUrl: 'views/signin.html',
       })
 
       .when('/signup', {
         templateUrl: 'views/signup.html',
+      })
+
+      // bets
+      .when('/bet-subjects', {
+        templateUrl: 'views/bet-subjects.html',
+        controller: 'BetSubjectList',
+        controllerAs: 'betSubjectList'
       })
 
       .otherwise({

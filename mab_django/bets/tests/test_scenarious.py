@@ -82,7 +82,7 @@ class BetViewsTest(MabTestCase):
     def test_scenarious(self):
         bet_subject = BetSubjectFactory(is_private=False)
         data = {'description': 'desc'}
-        url = reverse('api:bet', args=(bet_subject.pk,))
+        url = reverse('api:bets', args=(bet_subject.pk,))
 
         response = self.client.post(url, data)
         self.assertEqual(response.status_code, 201)

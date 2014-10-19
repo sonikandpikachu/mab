@@ -17,9 +17,9 @@ urlpatterns = patterns(
         name="bet_subjects"
     ),
     url(
-        regex=r"bet-subjects/(?P<bet_subject_pk>\d+)/bet/$",
+        regex=r"bet-subjects/(?P<bet_subject_pk>\d+)/bets/$",
         view=bets_views.BetCreate.as_view(),
-        name="bet"
+        name="bets"
     ),
     # users app urls:
     url(

@@ -10,7 +10,8 @@ from .serializers import UserSerializer, CreateUserSerializer, SignInSerializer
 
 
 class SignInView(APIView):
-    """ Sign in with users email and password, returns user data with auth_token
+    """
+    Sign in with users email and password, returns user data with auth_token
     """
     serializer_class = SignInSerializer
     permission_classes = []
@@ -21,7 +22,7 @@ class SignInView(APIView):
         if serializer.is_valid():
             user = serializer.object
             auth.login(request, user)
-            return Response(UserSerializer(user).data, status=200)
+            return Response(CreateUserSerializer(user).data, status=200)
         else:
             return Response(serializer.errors, status=400)
 

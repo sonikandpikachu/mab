@@ -1,3 +1,5 @@
+'use strict';
+
 (function() {
   angular.module('mab')
     .controller('SignUpCtrl', ['$location', 'users', SignUpCtrl]);

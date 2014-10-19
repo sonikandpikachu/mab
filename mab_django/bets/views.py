@@ -53,6 +53,9 @@ class BetSubjectListCreate(ListCreateAPIView):
 
 
 class BetCreate(CreateAPIView):
+    """
+    Creates new bet
+    """
     model = Bet
     serializer_class = BetSerializer
 

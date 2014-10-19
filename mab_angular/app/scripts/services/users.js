@@ -27,7 +27,7 @@
         .then(success);
 
       function success(data) {
-        vm.user = data;
+        vm.user = data.data;
         /*jshint camelcase: false*/
         setAuthCookie(vm.user.auth_token);
         vm.user.isAuthenticated = true;
@@ -66,7 +66,7 @@
     }
 
     function getCurrentUserFromServer() {
-      var url = API + 'current-vm.user/';
+      var url = API + 'current-user/';
       $http.get(url).then(
         function(serverUser) {
           vm.user = serverUser;
@@ -88,6 +88,7 @@
 
     function setAuthHeader(token) {
       $http.defaults.headers.common.Authorization = 'Token ' + token;
+      console.log('Token ' + token);
     }
 
   }
