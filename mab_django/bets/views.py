@@ -48,6 +48,11 @@ class BetSubjectListCreate(ListCreateAPIView):
             queryset = queryset.filter(BetSubjectManager.user_query(user))
         return queryset
 
+    def post(self, request):
+        response = super(BetSubjectListCreate, self).post(request)
+        response.data['request_data'] = request.DATA
+        return response
+
     def pre_save(self, bet_subject):
         bet_subject.author = self.request.user
 
