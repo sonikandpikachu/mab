@@ -6,3 +6,4 @@ class CorsMiddleware(object):
         """
         response['Access-Control-Request-Headers'] = 'X-Requested-With, accept, content-type'
         response['Access-Control-Allow-Methods'] = 'GET, POST'
+        return response
