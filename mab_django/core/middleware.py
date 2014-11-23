@@ -1,3 +1,9 @@
+import logging
+
+
+logger = logging.getLogger(__name__)
+
+
 class CorsMiddleware(object):
 
     def process_response(self, request, response):
@@ -6,6 +12,5 @@ class CorsMiddleware(object):
         """
         response['Access-Control-Request-Headers'] = 'X-Requested-With, accept, content-type'
         response['Access-Control-Allow-Methods'] = 'GET, POST'
-        with (open('responses.txt'), 'w') as f:
-            f.write(str(response.__dict__))
+        logger.warning(str(response.__dict__))
         return response
