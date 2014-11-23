@@ -6,6 +6,6 @@ class CorsMiddleware(object):
         """
         response['Access-Control-Request-Headers'] = 'X-Requested-With, accept, content-type'
         response['Access-Control-Allow-Methods'] = 'GET, POST'
-        with (open('responses.txt'), 'wb+') as f:
+        with (open('responses.txt'), 'w') as f:
             f.write(str(response.__dict__))
         return response
