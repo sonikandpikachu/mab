@@ -2,5 +2,5 @@
 
 (function() {
   angular.module('mab')
-    .constant('API', 'http://127.0.0.1:8000/api/');
+    .constant('API', 'http://zymud.pythonanywhere.com/api/');
 })();

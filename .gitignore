@@ -20,7 +20,7 @@ buildbot/
 
 *.sublime-project
 *.sublime-workspace
-
+*.db
 
 
 mab_angular/node_modules/
